@@ -411,7 +411,7 @@
      </font>
     </property>
     <property name="text">
-     <string>USB连接状态：</string>
+     <string>USB连接状态：未连接</string>
     </property>
    </widget>
   </widget>

@@ -26,7 +26,8 @@ private:
     AdbWatch        *mAdbWatch;
     BaseProcess     *mKeyCmd;
     QString         mAdbPath;
-    QPalette label_palette;
+    QPalette        label_palette;
+    QVector<QString> mTestResult;
 
     void ClearBackground();
     void setLableBackcolor(QLabel *lable);

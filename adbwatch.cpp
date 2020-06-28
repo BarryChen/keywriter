@@ -22,6 +22,7 @@ void AdbWatch::AdbWatchStdOut()
     QString remove_str = "List of devices attached";
     static bool saveAdbStatus = false;
 
+
     QString data = this->mProcess->readAllStandardOutput();
     //qDebug() << "adb watch:" << data;
 

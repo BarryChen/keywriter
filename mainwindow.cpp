@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     label_palette.setColor(QPalette::Background, QColor(0xcc,0xff,0xcc));
 
+    //test
+
+    mTestResult.resize(18);
+    mTestResult.fill("NP");
+
 }
 
 MainWindow::~MainWindow()
@@ -122,9 +127,14 @@ void MainWindow::ClearBackground()
     ui->label_status->setAutoFillBackground(true); //这句很关键，否则背景色被默认windows替代
     ui->label_status->setPalette(palette);
     ui->label_status->setText("USB连接状态：未连接");
+
+    mTestResult.clear();
+    mTestResult.resize(18);
+    mTestResult.fill("NP");
 }
 void MainWindow::AdbDisconnected()
 {
+    SyncTestResult();
     ClearBackground();
 }
 
@@ -156,41 +166,60 @@ void MainWindow::KeyEvent()
             qDebug() << "str:" << tmp;
             if(tmp == "0") {
                 setLableBackcolor(ui->label_0);
+                mTestResult.replace(0, tmp);
             } else if(tmp == "1") {
                 setLableBackcolor(ui->label_1);
+                mTestResult.replace(1, tmp);
             } else if(tmp == "2") {
                 setLableBackcolor(ui->label_2);
+                mTestResult.replace(2, tmp);
             } else if(tmp == "3") {
                 setLableBackcolor(ui->label_3);
+                mTestResult.replace(3, tmp);
             } else if(tmp == "4") {
                 setLableBackcolor(ui->label_4);
+                mTestResult.replace(4, tmp);
             } else if(tmp == "5") {
                 setLableBackcolor(ui->label_5);
+                mTestResult.replace(5, tmp);
             } else if(tmp == "6") {
                 setLableBackcolor(ui->label_6);
+                mTestResult.replace(6, tmp);
             } else if(tmp == "7") {
                 setLableBackcolor(ui->label_7);
+                mTestResult.replace(7, tmp);
             } else if(tmp == "8") {
                 setLableBackcolor(ui->label_8);
+                mTestResult.replace(8, tmp);
             } else if(tmp == "9") {
                 setLableBackcolor(ui->label_9);
+                mTestResult.replace(9, tmp);
             } else if(tmp == "F18") {
                 setLableBackcolor(ui->label_xin);
+                mTestResult.replace(10, tmp);
             } else if(tmp == "F19") {
                 setLableBackcolor(ui->label_jing);
+                mTestResult.replace(11, tmp);
             } else if(tmp == "F20") {
                 setLableBackcolor(ui->label_qingqing);
+                mTestResult.replace(12, tmp);
             } else if(tmp == "F21") {
                 setLableBackcolor(ui->label_spk);
+                mTestResult.replace(13, tmp);
             } else if(tmp == "F22") {
                 setLableBackcolor(ui->label_recall);
+                mTestResult.replace(14, tmp);
             } else if(tmp == "BACKSPACE") {
                 setLableBackcolor(ui->label_del);
+                mTestResult.replace(15, "DEL");
             } else if(tmp == "F23") {
                 setLableBackcolor(ui->label_endcall);
+                mTestResult.replace(16, tmp);
             } else if(tmp == "F24") {
                 setLableBackcolor(ui->label_call);
+                mTestResult.replace(17, tmp);
             }
+
         }
 
     }
@@ -251,28 +280,11 @@ void MainWindow::SyncTestResult()
         list << QString::number(index++);
         list << time;
 
-//        if(testResult.contains("powerup") && testResult.contains("powerdown"))
-//            list << "powerOK";
-//        else
-//            list << "powerER";
-
-//        if(testResult.contains("v+up") && testResult.contains("v+down"))
-//            list << "vol+OK";
-//        else
-//            list << "vol+ER";
-
-//        if(testResult.contains("v-up") && testResult.contains("v-down"))
-//            list << "vol-OK";
-//        else
-//            list << "vol-ER";
-
-//        if(testResult.contains("gpsok"))
-//            list << "gpsOK";
-//        else
-//            list << "gpsER";
+        list << mTestResult.toList();
+        qDebug() << list.join("\t");
 
         list << "\r\n";
-        //testResult.clear();
+        //mTestResult.clear();
 
         f.write(list.join("\t").toLatin1().data());
     }
@@ -286,7 +298,7 @@ void MainWindow::on_actions_triggered()
     title << "按键板测试工具";
     title << " - ";
 
-    QString fileName = QFileDialog::getOpenFileName(this,tr("文件对话框！"), ".", tr("ALL(* .*);;"));
+    QString fileName = QFileDialog::getOpenFileName(this,tr("文件对话框！"), ".", tr("exe(*.exe);"));
     qDebug()<<"filename : "<<fileName;
 
     title << fileName;
